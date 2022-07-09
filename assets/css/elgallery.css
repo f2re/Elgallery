@@ -15,7 +15,7 @@ img {
     width: 100vw;
     overflow: hidden;
     box-sizing: border-box;
-    z-index: 9;
+    z-index: 100;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -23,9 +23,9 @@ img {
 
 .elgallery-mainContainer{
     flex:1;
-    min-height: 400px;
+    /* min-height: 400px; */
     min-width: 100%;
-    height: 400px;
+    /* height: 400px; */
     width: 100%;
     overflow: hidden;
     z-index: 1;
@@ -47,7 +47,7 @@ img {
     width: 100%;
     overflow: hidden;
     box-sizing: border-box;
-    background: rgba(0,0,0,.85);
+    background: white;
     z-index: 0;
 }
 
@@ -71,6 +71,7 @@ img {
     height: 100vh;
     white-space: nowrap;
     transition: all .4s ease-in-out;
+    display: inline-flex;
 }
 
 #mklbInnerMini {
@@ -95,7 +96,7 @@ section.imageContainerInner {
     align-items: center;
     padding: 0;
     width: 100%;
-    height: 400px;
+    /* height: 400px; */
 }
 
 #mkLightboxContainer img,
@@ -255,32 +256,49 @@ section.imageContainerInner {
     opacity: 1
 }
 
-@media screen and (max-width: 768px){
+@media only screen and (max-width: 768px){
     .grid-2-sm {
         grid-template-columns: 1fr 1fr;
     }
     .grid-adopt {
-        grid-template-columns: repeat(7,1fr);
+        display: grid;
+        grid-gap: 10px;
+        grid-template-columns: repeat(4,1fr) !important;
+        align-items: center;
     }
 }
 
-@media screen and (max-width: 450px){
-    .grid-12-xs {
-        grid-template-columns: 1fr;
-    }
-    .grid-adopt {
-        grid-template-columns: repeat(7,1fr);
-    }
+.block-none{
+    display: none;
 }
 
 .grid-adopt {
     display: grid;
     grid-gap: 10px;
     grid-template-columns: repeat(7,1fr);
-    grid-auto-rows: 100px;
+    grid-auto-rows: auto;
     align-items: center;
 }
 
 .grid-adopt > img{
-    align-self: center
+    align-self: center;
+}
+
+.grid-last{
+    margin-top:10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.grid-last > img{
+    height: auto;
+    /* padding: 5px; */
+    max-height: 100px;
+    margin-right:10px;
+}
+
+.grid-last > img:last-of-type{
+    margin-right: 0px !important;
 }

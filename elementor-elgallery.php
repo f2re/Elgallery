@@ -7,7 +7,7 @@
  * Plugin Name: Elementor Elgallery
  * Description: Elementor gallery for KWork project
  * Plugin URI:  https://github.com/f2re/Elgallery
- * Version:     1.0.0
+ * Version:     1.0.1
  * Author:      F2re
  * Author URI:  https://github.com/f2re/Elgallery
  * Text Domain: elementor-elgallery

@@ -10,7 +10,7 @@
  * @license    https://opensource.org/licenses/GPL-3.0 GPL-3.0-only
  * @link       link(https://github.com/f2re/Elgallery,
  *             Build Custom Elementor Widgets)
- * @since      1.0.0
+ * @since      1.0.1
  * php version 7.3.9
  */
 
@@ -142,14 +142,24 @@ class Elgallery extends Widget_Base {
 
 			array_unshift($attachment_ids, get_post_thumbnail_id($product_id));
 			?>
-			<div class="elgallery-mainContainer" id="elgallery-<?php echo $product_id?>">
-			</div>
-			<div class="grid-adopt">
-			<?php foreach ($attachment_ids as $_id) {
-				$_img = wp_get_attachment_image_url( $_id, 'thumb-orig' );
-				$_img_full = wp_get_attachment_image_url( $_id, 'full' );
-				echo '<img class="mklbItem" src="' . $_img . '" data-src="' . $_img_full . '" data-gallery="gallery-'.$product_id.'">';
-			} ?>
+			<div class="elgallery-widget">
+				<div class="elgallery-mainContainer" id="elgallery-<?php echo $product_id?>">
+				</div>
+				<div class="block-none">
+				<?php foreach ($attachment_ids as $_id) {
+					$_img = wp_get_attachment_image_url( $_id, 'thumb-orig' );
+					$_img_full = wp_get_attachment_image_url( $_id, 'full' );
+					echo '<img class="mklbItem" src="' . $_img . '" data-src="' . $_img_full . '" data-gallery="gallery-'.$product_id.'">';
+				} ?>
+				</div>
+				<div class="grid-adopt">
+				<?php foreach ($attachment_ids as $_id) {
+					$_img = wp_get_attachment_image_url( $_id, 'thumb-orig' );
+					$_img_full = wp_get_attachment_image_url( $_id, 'full' );
+					echo '<img class="mklbItem" onload="firstLoad()" src="' . $_img . '" data-src="' . $_img_full . '" data-gallery="gallery-'.$product_id.'">';
+				} ?>
+				</div>
+				<div class="grid-last"></div>
 			</div>
 			<?php
 		}

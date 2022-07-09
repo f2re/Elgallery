@@ -16,6 +16,116 @@ let auto = 0;
 let interval;
 let curindex=0;
 let container_width = mklbMainContainer.offsetWidth;
+// максимальная ширина, меньше которой уже выравниваем по 4 картинки
+let maxcontentWidth = 768;
+// 1 - это > maxcontentWidth, 0 - это меньше maxcontentWidth
+let lastSize = 1;
+let _firstLoad = false;
+
+// обрабатываем ресайз окна
+window.addEventListener('resize', ready );
+
+function ready(event){
+    // do stuff here
+    container_width = mklbMainContainer.offsetWidth;
+    _mklbSyncSlide();
+    _mklbSyncOverlaySlide();
+    let putimg = false;
+    
+    if ( window.innerWidth <= maxcontentWidth ){
+        if ( lastSize==1 ){
+            putimg=true;
+        }
+        lastSize = 0;
+    }else{
+        if ( lastSize==0 ){
+            putimg=true;
+        }
+        lastSize = 1;
+    }
+
+    if ( putimg ){
+        _putImages();
+    }
+
+    _syncImgWidth();
+}
+
+document.addEventListener("DOMContentLoaded", ready);
+
+function firstLoad(){
+    if (!_firstLoad){
+        _firstLoad=true;
+        _putImages();
+        _syncImgWidth();
+    }
+}
+
+function _putImages(){
+    // iterate over plugin containers
+    var container = document.getElementsByClassName("elgallery-widget");
+    for (var i = 0; i < container.length; i++) {
+        let _item = container.item(i);
+        let _blkimages = _item.getElementsByClassName('block-none')[0];
+        let _images = _blkimages.getElementsByClassName('mklbItem');
+        // let _images = _item.getElementsByClassName('mklbItem');
+        let _target = _item.getElementsByClassName('grid-adopt')[0];
+        let _target_tail = _item.getElementsByClassName('grid-last')[0];
+        
+        // assuming elm is the element
+        while (_target.firstChild) {
+            _target.removeChild(_target.firstChild);
+        }
+        while (_target_tail.firstChild) {
+            _target_tail.removeChild(_target_tail.firstChild);
+        }
+
+        // считаем есть ли лишние и добавляем их в последний ряд
+        let _lastitems = _images.length % ( lastSize==0 ? 4 : 7 );
+        if (_lastitems>0){
+            for (var k = _images.length-1; k >= _images.length - _lastitems; k--) {
+                const _nimg = _images.item(k).cloneNode(true);
+                _nimg.setAttribute('data',k);
+                _nimg.addEventListener('click', (ev) => {
+                    _mklbSyncSlide(ev.currentTarget.getAttribute('data'));
+                });
+                _target_tail.appendChild( _nimg );
+            }
+        }
+
+        // сбрасываем все в первый контейнер
+        for (var j = 0; j < _images.length - _lastitems; j++) {
+            const _nimg = _images.item(j).cloneNode(true);
+            _nimg.setAttribute('data',j);
+            _nimg.addEventListener('click', (ev) => {
+                _mklbSyncSlide(ev.currentTarget.getAttribute('data'));
+            });
+            _target.appendChild( _nimg );
+        }
+    }
+}
+
+function _syncImgWidth(){
+    var container = document.getElementsByClassName("elgallery-widget");
+    for (var i = 0; i < container.length; i++) {
+        let _item = container.item(i);
+        let _blkimages = _item.getElementsByClassName('grid-adopt')[0];
+        let _images = _blkimages.getElementsByClassName('mklbItem');
+        for (let j = 0; j < _images.length; j++) {
+            const element = _images[j];
+            element.style.width = 'auto';
+        }
+        if ( _images.length>0 ){
+            let _imgw = _images[0].offsetWidth;
+            let _target_tail = _item.getElementsByClassName('grid-last')[0];
+            _images = _target_tail.getElementsByClassName('mklbItem');
+            for (let j = 0; j < _images.length; j++) {
+                const element = _images[j];
+                element.style.width = _imgw+'px';
+            }
+        }
+    }
+}
 
 /**
  * Iterate over all images
@@ -175,6 +285,7 @@ function _mklbAddInnerGallery(currentItem) {
     
     mklbInner.style.marginLeft = (index-1) * (-100) + '%';
     mklbMainContainer.appendChild(mklbInner);
+
 }
 
 function _closeLightbox() {
@@ -219,12 +330,20 @@ function _mklbSlideInner(slideToPrev) {
     _mklbSyncSlide();
 }
 
-function _mklbSyncSlide(){
+function _mklbSyncSlide(ind = false){
+
     let inner = document.getElementById('mklbInnerMini');
-    inner.style.transform = 'translate3d('+(-curindex*container_width)+'px,0,0)';
+    if (ind!==false){
+        curindex=ind;
+    }
+    if ( inner ){
+        inner.style.transform = 'translate3d('+(-curindex*container_width)+'px,0,0)';
+    }
 }
 
 function _mklbSyncOverlaySlide(){
     let inner = document.getElementById('mklbInner');
-    inner.style.transform = 'translate3d('+(-curindex*document.getElementById('mkLightboxContainer').offsetWidth)+'px,0,0)';
+    if ( inner ){
+        inner.style.transform = 'translate3d('+(-curindex*document.getElementById('mkLightboxContainer').offsetWidth)+'px,0,0)';
+    }
 }
