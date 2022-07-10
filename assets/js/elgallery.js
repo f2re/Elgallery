@@ -188,7 +188,7 @@ function _mklbOpen(curindex) {
     prev.id = 'prev';
     prev.innerHTML = svgIcons.prev;
     let prevContainer = document.createElement('div');
-    prevContainer.id = "prevContainer";
+    prevContainer.id = "prevContainerOuter";
     prevContainer.appendChild(prev);
     overlayToInner.appendChild(prevContainer);
     prevContainer.addEventListener('click', () => _mklbSlide(true));
@@ -199,7 +199,7 @@ function _mklbOpen(curindex) {
     next.setAttribute('data-next', (index <= gallery.length) ? index+1 : 1);
     next.innerHTML = svgIcons.next;
     let nextContainer = document.createElement('div');
-    nextContainer.id = "nextContainer";
+    nextContainer.id = "nextContainerOuter";
     nextContainer.appendChild(next);
     overlayToInner.appendChild(nextContainer);
 	nextContainer.addEventListener('click', ()=>_mklbSlide(false) );
@@ -334,7 +334,7 @@ function _mklbSyncSlide(ind = false){
 
     let inner = document.getElementById('mklbInnerMini');
     if (ind!==false){
-        curindex=ind;
+        curindex=parseInt(ind);
     }
     if ( inner ){
         inner.style.transform = 'translate3d('+(-curindex*container_width)+'px,0,0)';

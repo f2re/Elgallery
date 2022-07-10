@@ -152,7 +152,9 @@ section.imageContainerInner {
 }
 
 #prevContainer,
-#nextContainer {
+#nextContainer,
+#prevContainerOuter,
+#nextContainerOuter {
     position: absolute;
     left: 0;
     top: 0;
@@ -182,13 +184,16 @@ section.imageContainerInner {
     z-index: 3;
 }
 
-#nextContainer {
+#nextContainer,
+#nextContainerOuter{
     left: auto;
     right: 0;
 }
 
 #overlayToInner > #prevContainer,
-#overlayToInner > #nextContainer {
+#overlayToInner > #nextContainer,
+#overlayToInner > #prevContainerOuter,
+#overlayToInner > #nextContainerOuter {
     z-index: 300;
     opacity: 1;
     width: 100px;
@@ -197,7 +202,9 @@ section.imageContainerInner {
 
 .elgallery-mainContainer:hover #prevContainer,
 .elgallery-mainContainer:hover #zoomContainer,
-.elgallery-mainContainer:hover #nextContainer {
+.elgallery-mainContainer:hover #nextContainer,
+.elgallery-mainContainer:hover #prevContainerOuter,
+.elgallery-mainContainer:hover #nextContainerOuter {
     cursor: pointer;
     opacity: 1;
 }
