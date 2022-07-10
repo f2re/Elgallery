@@ -83,13 +83,14 @@ function _putImages(){
         // считаем есть ли лишние и добавляем их в последний ряд
         let _lastitems = _images.length % ( lastSize==0 ? 4 : 7 );
         if (_lastitems>0){
-            for (var k = _images.length-1; k >= _images.length - _lastitems; k--) {
+            for (var k = _images.length - _lastitems; k <= _images.length-1 ; k++) {
                 const _nimg = _images.item(k).cloneNode(true);
                 _nimg.setAttribute('data',k);
                 _nimg.addEventListener('click', (ev) => {
                     _mklbSyncSlide(ev.currentTarget.getAttribute('data'));
                 });
                 _target_tail.appendChild( _nimg );
+                // console.log(_nimg);
             }
         }
 
