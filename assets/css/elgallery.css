@@ -70,13 +70,13 @@ img {
 #mkLightboxContainer #mklbInner {
     height: 100vh;
     white-space: nowrap;
-    transition: all .4s ease-in-out;
+    /* transition: all .4s ease-in-out; */
     display: inline-flex;
 }
 
 #mklbInnerMini {
     white-space: nowrap;
-    transition: all .4s ease-in-out;
+    /* transition: all .4s ease-in-out; */
 }
 
 section.imageContainer {
